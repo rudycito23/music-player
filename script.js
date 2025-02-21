@@ -78,3 +78,45 @@ const allSongs = [
     src: "https://cdn.freecodecamp.org/curriculum/js-music-player/chasing-that-feeling.mp3",
   },
 ];
+
+const audio = new Audio();
+
+//  the spread operator is used to make a copy of all the elements from one array into a new array;
+//  it can also concatenate two arrays into one.
+//  In this case, we are using it to copy all the songs from the allSongs array into the userData object.
+let userData = {
+  songs: [...allSongs],
+  currentSong: null,
+  currentSongTime: 0,
+};
+
+//  arrow functions: if it has one one parameter, you can omit the parentheses around the parameter;
+//  if the function body is a single expression, you can omit the return keyword and the curly braces;
+//  if the function body is a block of code, you must include the return keyword and the curly braces;
+//  if the function has multiple parameters, you must include the parentheses around the parameters
+
+//  display the songs in the UI; create a function that takes in an array argument;
+//  when the songs are displayed, it should show the title, artis, song duration, and delete button
+const renderSongs = (array) => {
+  //  map() method iterates through an array and returns a new array based on the values of an existing array;
+  //  it takes a callback function (which is a function that is passed to another function as an argument)
+  //  and passes each element of the array to the callback function;
+  const songsHTML = array.map((song) => {
+    //  add a return statement with backticks to interpolate all the elements responsible for displaying the song details;
+    //  create an li element with an id of song-${song.id} and a class of playlist-song;
+    return `
+    <li id="song-${song.id}" class="playlist-song">
+    <button class="playlist-song-info">
+    <span class="playlist-song-title">${song.title}</span>
+    <span class="playlist-song-artist">${song.artist}</span>
+    <span class="playlist-song-duration">${song.duration}</span>
+    </button>
+    <button class="playlist-song-delete" aria-label="Delete ${song.title}">
+    <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><use href="assets/images/delete-1-svgrepo-com.svg"></use></svg>
+    </button>
+    </li>`;
+  }).join("");
+
+  playListSongs.innerHTML = songsHTML;
+  renderSongs(userData?.songs);
+};
